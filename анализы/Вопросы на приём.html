@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Вопросы на приём</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a one-sheet visit brief — patient line, a summary the doctor can read in 30 seconds, key numbers, then questions per specialist with room to write answers. Prints cleanly on A4. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #15191d;
+  --ink-2: #4b535b;
+  --ink-3: #7b838b;
+  --line: #dde1e5;
+  --accent: #1f5f8b;
+  --accent-soft: #e6eff6;
+  --hi: #a2271f;
+  --f-body: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238;
+    --accent: #6fb0e0; --accent-soft: #1b2a38; --hi: #ff9d92; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238;
+  --accent: #6fb0e0; --accent-soft: #1b2a38; --hi: #ff9d92; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 820px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+header { display: grid; gap: 4px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-size: clamp(22px, 4.5vw, 28px); line-height: 1.2; margin: 0; font-weight: 700; text-wrap: balance; }
+.pt { display: flex; flex-wrap: wrap; gap: 4px 18px; color: var(--ink-2); font-size: 14px; }
+h2 { font-size: 17px; margin: 0; font-weight: 700; text-wrap: balance; }
+p { margin: 0; }
+section { display: grid; gap: 10px; min-width: 0; }
+.n { font-family: var(--f-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hi { color: var(--hi); font-weight: 600; }
+
+.brief { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 18px; display: grid; gap: 6px; }
+.brief p { font-size: 15px; }
+
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+th, td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 600; color: var(--ink-2); font-size: 12.5px; }
+td { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+td:first-child { font-family: var(--f-body); }
+td.r { color: var(--ink-3); font-family: var(--f-body); font-size: 12.5px; }
+tr:last-child td { border-bottom: 0; }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.facts div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+.facts b { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin-bottom: 2px; }
+
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 12px; break-inside: avoid; }
+.doc h2 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.doc h2 span { font-size: 13px; font-weight: 400; color: var(--ink-3); }
+.q { display: grid; gap: 4px; }
+.q p { font-weight: 500; }
+.q p::before { content: "☐ "; color: var(--ink-3); font-weight: 400; }
+.q .main { font-weight: 700; }
+.ans { border-bottom: 1px dashed var(--line); height: 26px; }
+.ans + .ans { height: 22px; }
+.ctx { font-size: 13px; color: var(--ink-2); font-weight: 400; }
+
+ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.foot { font-size: 12.5px; color: var(--ink-3); }
+
+@media print {
+  body { background: #fff; color: #000; font-size: 12.5px; }
+  .wrap { padding-block: 0; gap: 14px; max-width: none; }
+  .brief, .tbl, .facts div, .doc { border-color: #bbb; background: #fff; }
+  .ans { height: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Вопросы на приём · подготовлено 05.10.2026</div>
+    <h1>Чернец Ольга Валентиновна</h1>
+    <div class="pt"><span>02.07.1973, 53 года</span><span>МК Герцена 1-2026/32950</span><span>Рост 165 см, вес 55 кг</span></div>
+  </header>
+
+  <section aria-labelledby="h-brief">
+    <h2 id="h-brief">Коротко для врача</h2>
+    <div class="brief">
+      <p>Рак ректосигмоидного отдела толстой кишки, IV ст., множественные метастазы в печени (до 96 мм в воротах). Механическая желтуха, разобщение протоков на уровне конфлюенса. ЧЧХС 28.08.2026: дренажи в сегментарных протоках S8 и S3, по ним 250–300 мл желчи в сутки. <b>Положение дренажей проверено 04.10 — стоят правильно.</b></p>
+      <p>Билирубин после дренирования снизился с 231 до 150–170 и <b>с 13.09 не снижается</b>. Для начала химиотерапии рекомендовано снизить до 40. На МРХПГ 04.10 протоки S6–S7 расширены до 4,8 мм, впервые свободная жидкость, гепатомегалия нарастает. РЭА 171 → 362 за 13 дней.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-num">
+    <h2 id="h-num">Ключевые цифры</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Показатель</th><th>28.08</th><th>01.09</th><th>16.09</th><th>29.09</th><th>03.10</th><th>04.10</th><th>Норма</th></tr></thead>
+      <tbody>
+        <tr><td>Билирубин общий, мкмоль/л</td><td class="hi">230,7</td><td class="hi">161,3</td><td class="hi">168,5</td><td class="hi">148,5</td><td class="hi">167,4</td><td class="hi">156,3</td><td class="r">5–21</td></tr>
+        <tr><td>Билирубин прямой, мкмоль/л</td><td class="hi">207,1</td><td class="hi">143,3</td><td class="hi">94,0</td><td>—</td><td class="hi">94,4</td><td class="hi">90,1</td><td class="r">&lt; 3,4</td></tr>
+        <tr><td>Щелочная фосфатаза, Ед/л</td><td class="hi">1190</td><td class="hi">723</td><td class="hi">388</td><td class="hi">396</td><td class="hi">359</td><td>—</td><td class="r">≤ 120</td></tr>
+        <tr><td>Альбумин, г/л</td><td class="hi">32,1</td><td class="hi">27,6</td><td>36,9</td><td>—</td><td>—</td><td>—</td><td class="r">35–52</td></tr>
+        <tr><td>МНО</td><td>—</td><td>—</td><td class="hi">1,51</td><td class="hi">1,71</td><td>—</td><td>—</td><td class="r">0,9–1,2</td></tr>
+        <tr><td>Гемоглобин, г/л</td><td class="hi">110</td><td class="hi">83</td><td class="hi">101</td><td class="hi">104</td><td class="hi">101</td><td class="hi">101</td><td class="r">120–140</td></tr>
+        <tr><td>Лейкоциты, ×10⁹/л</td><td class="hi">10,4</td><td class="hi">11,8</td><td class="hi">13,1</td><td class="hi">15,2</td><td class="hi">18,4</td><td class="hi">14,8</td><td class="r">4–9</td></tr>
+        <tr><td>СРБ, мг/л</td><td>—</td><td>—</td><td class="hi">51,4</td><td>—</td><td class="hi">50,2</td><td class="hi">53,3</td><td class="r">&lt; 5</td></tr>
+        <tr><td>РЭА, нг/мл</td><td>—</td><td>—</td><td class="hi">171</td><td class="hi">362</td><td>—</td><td>—</td><td class="r">≤ 5</td></tr>
+      </tbody>
+    </table></div>
+    <div class="facts">
+      <div><b>Доля прямого билирубина</b>84–90% в августе → 54–58% с 13.09 (непрямой ≈ 18 → ≈ 66). Возможно, разница методик лабораторий.</div>
+      <div><b>Также</b>Железо 3,9, ферритин 252, D-димер ↑ (2,44 мг/л FEU), фибриноген 5,6, тромбоциты 520–700, ЛДГ 907, АФП 2,4 (норма).</div>
+      <div><b>Принимает</b>Гептрал, бициклол, Урсосан, Креон. Промывание дренажей 2 раза в день по 30–40 мл NaCl 0,9%.</div>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="h-surg">
+    <h2 id="h-surg">Хирург / рентгенэндоваскулярный хирург <span>отток желчи</span></h2>
+    <div class="q"><p class="main">Какая часть работающей печени сейчас дренирована и можно ли довести её до 50% и больше?</p><div class="ans"></div></div>
+    <div class="q"><p>Можно ли поставить дренаж в протоки S6–S7? <span class="ctx">На МРХПГ 04.10 они расширены до 4,8 мм.</span></p><div class="ans"></div></div>
+    <div class="q"><p>Подходит ли стентирование (внутреннее дренирование), чтобы желчь шла в кишку? Если да — когда и где?</p><div class="ans"></div></div>
+    <div class="q"><p>Если дополнительное дренирование не поможет, почему? Билирубин может упираться в работу самой печени?</p><div class="ans"></div></div>
+    <div class="q"><p>Нужна ли антибиотикопрофилактика, есть ли признаки холангита? Можно ли сделать посев желчи из дренажа?</p><div class="ans"></div></div>
+    <div class="q"><p>Сужение кишки до 0,6 см: нужен ли кишечный стент или стома до начала химиотерапии?</p><div class="ans"></div></div>
+  </section>
+
+  <section class="doc" aria-labelledby="h-chemo">
+    <h2 id="h-chemo">Онколог-химиотерапевт <span>лечение</span></h2>
+    <div class="q"><p class="main">Если билирубин не опустится до 40, можно ли начать лечение при текущем уровне, с уменьшенными дозами? Если нет — какой план и сколько ждать?</p><div class="ans"></div><div class="ans"></div></div>
+    <div class="q"><p>Готова ли гистология 17.09? Назначены ли RAS (KRAS, NRAS), BRAF, MSI/dMMR? Когда будут результаты?</p><div class="ans"></div></div>
+    <div class="q"><p>Если MSI-H — рассматривается ли иммунотерапия при текущем билирубине?</p><div class="ans"></div></div>
+    <div class="q"><p>Нужен ли онкологический консилиум с участием хирурга, чтобы решить по дренированию и лечению вместе?</p><div class="ans"></div></div>
+    <div class="q"><p>Влияет ли рост РЭА, увеличение печени и появление жидкости на сроки и выбор схемы?</p><div class="ans"></div></div>
+    <div class="q"><p>Можно ли получать химиотерапию в Москве через ЦАОП или городской онкоцентр, если так быстрее?</p><div class="ans"></div></div>
+    <div class="q"><p>Как вы оцениваете прогноз при лечении и без него? Чего нам ждать в ближайшие месяцы?</p><div class="ans"></div></div>
+  </section>
+
+  <section class="doc" aria-labelledby="h-ther">
+    <h2 id="h-ther">Онколог ЦАОП / терапевт поликлиники <span>сопутствующее</span></h2>
+    <div class="q"><p>Витамин K при МНО 1,71? Повторить МНО через 2–3 дня, чтобы понять резерв печени.</p><div class="ans"></div></div>
+    <div class="q"><p>Железо внутривенно при гемоглобине 101 и железе 3,9?</p><div class="ans"></div></div>
+    <div class="q"><p>Профилактика тромбозов при D-димере ↑, тромбоцитах до 700, сдавлении нижней полой вены — с учётом МНО?</p><div class="ans"></div></div>
+    <div class="q"><p>Нужен ли Урсосан, пока протоки у ворот печени пережаты? Есть ли смысл в Гептрале и бициклоле?</p><div class="ans"></div></div>
+    <div class="q"><p>Лечебное питание (высокобелковые смеси) — можно ли по льготе?</p><div class="ans"></div></div>
+    <div class="q"><p>Направление на МСЭ и признание нуждающейся в паллиативной помощи. Направление в паллиативную службу.</p><div class="ans"></div></div>
+  </section>
+
+  <section aria-labelledby="h-order">
+    <h2 id="h-order">Попросить назначить</h2>
+    <ul>
+      <li>Билирубин общий, прямой и непрямой — 2–3 раза подряд в одной лаборатории</li>
+      <li>Альбумин, МНО (до и после витамина K), общий анализ крови, СРБ</li>
+      <li>Посев желчи из дренажа, посев мочи</li>
+      <li>Учёт объёма желчи по каждому дренажу (ведём дома дневник)</li>
+    </ul>
+  </section>
+
+  <p class="foot">Подготовлено родственниками по документам: Энгельсская ГКБ №1, МНИОИ им. Герцена, МКНЦ им. Логинова, ГКБ №15 им. Филатова. Подробная динамика анализов — в отдельной сводке.</p>
+</div>
+</body>
+</html>

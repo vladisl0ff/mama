@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Инвалидность: путь в Москве</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column; the procedure is a real sequence, so steps are numbered and each carries who acts, the legal deadline and what to do. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #15191d;
+  --ink-2: #4b535b;
+  --ink-3: #7b838b;
+  --line: #dde1e5;
+  --accent: #1f5f8b;
+  --accent-soft: #e6eff6;
+  --do-bg: #fdf1dc; --do-ink: #7a4f00; --do-edge: #f0d29a;
+  --ok-bg: #e3f3ea; --ok-ink: #11663f;
+  --f-body: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238;
+    --accent: #6fb0e0; --accent-soft: #1b2a38; --do-bg: #3a2e14; --do-ink: #f2c26b; --do-edge: #5c4820;
+    --ok-bg: #16342a; --ok-ink: #7fdcab; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238;
+  --accent: #6fb0e0; --accent-soft: #1b2a38; --do-bg: #3a2e14; --do-ink: #f2c26b; --do-edge: #5c4820;
+  --ok-bg: #16342a; --ok-ink: #7fdcab; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 780px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+header { display: grid; gap: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-size: clamp(26px, 5vw, 34px); line-height: 1.15; margin: 0; font-weight: 700; text-wrap: balance; }
+h2 { font-size: 22px; line-height: 1.25; margin: 0; font-weight: 600; text-wrap: balance; }
+h3 { font-size: 17px; margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+section { display: grid; gap: 16px; min-width: 0; }
+.lead { color: var(--ink-2); }
+.n { font-family: var(--f-num); font-size: .92em; white-space: nowrap; }
+a { color: var(--accent); }
+
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 640px) { .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; align-content: start; }
+.fact .k { font-size: 12.5px; color: var(--ink-3); }
+.fact .v { font-weight: 600; font-size: 15px; }
+
+.now { background: var(--do-bg); border: 1px solid var(--do-edge); border-radius: 12px; padding: 18px 22px; display: grid; gap: 10px; }
+.now h2 { color: var(--do-ink); }
+.now ol { gap: 8px; }
+
+.steps { display: grid; gap: 0; counter-reset: st; }
+.step { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; padding-block: 18px; border-top: 1px solid var(--line); }
+.step:first-child { border-top: 0; padding-top: 4px; }
+.num { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-family: var(--f-num); font-weight: 600; display: grid; place-items: center; font-size: 15px; }
+.body { display: grid; gap: 8px; min-width: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; padding: 1px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.tag.time { background: var(--ok-bg); color: var(--ok-ink); }
+.say { border-left: 3px solid var(--accent); padding: 6px 12px; background: var(--surface); border-radius: 0 8px 8px 0; font-size: 15px; }
+.src { font-size: 13px; color: var(--ink-3); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; display: grid; gap: 10px; }
+.check { list-style: none; padding-left: 0; }
+.check li { padding-left: 28px; position: relative; }
+.check li::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border: 1.5px solid var(--ink-3); border-radius: 4px; }
+
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 13px; }
+tr:last-child td { border-bottom: 0; }
+.foot { font-size: 13px; color: var(--ink-3); }
+.sources { font-size: 14px; }
+.sources li { word-break: break-word; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Инструкция · Москва · правила на октябрь 2026</div>
+    <h1>Как оформить инвалидность Ольге Валентиновне</h1>
+    <p class="lead">Пошаговый порядок для онкологического пациента в Москве: от приёма в поликлинике до пенсии и городских льгот. Опирается на Правила признания лица инвалидом (постановление Правительства № 588, с изменениями, действующими с 01.03.2026) и разъяснения Минтруда, Социального фонда и профильных фондов. Ссылки на источники в конце.</p>
+  </header>
+
+  <section aria-label="Исходные условия">
+    <div class="facts">
+      <div class="fact"><span class="k">Прописка</span><span class="v">Москва ✓</span></div>
+      <div class="fact"><span class="k">Поликлиника</span><span class="v">прикреплена ✓</span></div>
+      <div class="fact"><span class="k">Работа</span><span class="v">официально, больничный открыт ✓</span></div>
+      <div class="fact"><span class="k">Ожидаемый срок</span><span class="v">3–6 недель</span></div>
+    </div>
+  </section>
+
+  <section class="now" aria-labelledby="h-now">
+    <h2 id="h-now">Что сделать на этой неделе</h2>
+    <ol>
+      <li><b>Проверить Госуслуги пациентки.</b> Нужна подтверждённая учётная запись: туда придут уведомления, справка об инвалидности и ИПРА. Если нет доступа — восстановить через МФЦ или банк.</li>
+      <li><b>Оформить нотариальную доверенность</b> на одного родственника: представлять её в медицинских организациях, бюро МСЭ, Социальном фонде, соцзащите, МФЦ и перед работодателем. Нотариуса можно вызвать на дом.</li>
+      <li><b>Записаться к онкологу ЦАОП</b> или участковому терапевту московской поликлиники с целью: «направление на МСЭ».</li>
+      <li><b>Собрать папку документов</b> по списку ниже.</li>
+      <li><b>Не увольняться.</b> Почему — в разделе «Работа и больничный».</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-docs">
+    <h2 id="h-docs">Документы для первого приёма</h2>
+    <div class="card">
+      <ul class="check">
+        <li>Паспорт, полис ОМС, СНИЛС пациентки</li>
+        <li>Доверенность и паспорт представителя, если на приём идёт родственник</li>
+        <li>Выписка Энгельсской ГКБ №1 (17.08–02.09.2026, ЧЧХС 28.08)</li>
+        <li>Консультации Герцена: хирург 15.09, химиотерапевт 18.09; протокол колоноскопии 17.09</li>
+        <li><b>Гистологическое заключение</b> по биопсии 17.09 — главный документ, подтверждающий диагноз</li>
+        <li>Выписной эпикриз ГКБ №15 (03–04.10.2026)</li>
+        <li>МРТ печени 12.08 («Реал П.К.»), КТ грудной клетки 21.08, МР-холангиография 04.10</li>
+        <li>Анализы НМИЦ радиологии 16.09 (онкомаркеры, биохимия, коагулограмма). Анализы из городских больниц Москвы (Логинова, ГКБ №15) врач видит в ЕМИАС, но бумажные копии не помешают</li>
+        <li>Номер открытого больничного листа</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-steps">
+    <h2 id="h-steps">Порядок по шагам</h2>
+    <div class="steps">
+
+      <div class="step"><div class="num">1</div><div class="body">
+        <h3>Приём у врача поликлиники</h3>
+        <div class="tags"><span class="tag">пациентка или представитель</span></div>
+        <p>Онколог ЦАОП или участковый терапевт. Врач организует обследование и выносит вопрос на врачебную комиссию поликлиники. Самостоятельно идти в бюро МСЭ без направления сейчас нельзя: с июля 2022 года направление оформляет только медицинская организация.</p>
+        <p class="say">«У мамы рак кишки IV стадии с метастазами в печени, симптоматическое лечение, больничный открыт с августа. Нужно направление на МСЭ. Прошу также рассмотреть признание её нуждающейся в паллиативной помощи».</p>
+        <p class="src">Статус пациента, нуждающегося в паллиативной помощи, не означает отказ от лечения. Химиотерапию с ним получать можно. Но он резко сокращает сроки (см. шаги 5 и 6). Решение о статусе принимает врачебная комиссия или консилиум.</p>
+      </div></div>
+
+      <div class="step"><div class="num">2</div><div class="body">
+        <h3>Согласие на направление и экспертизу</h3>
+        <div class="tags"><span class="tag">пациентка или представитель</span></div>
+        <p>Подписывается одно согласие сразу на направление и на проведение МСЭ. В нём указывают форму экспертизы. <b>Выбирайте заочную:</b> комиссия решает по документам, ехать в бюро не нужно.</p>
+        <p class="src">Правила № 588, п. 17 (письменное согласие гражданина или представителя).</p>
+      </div></div>
+
+      <div class="step"><div class="num">3</div><div class="body">
+        <h3>Обследования</h3>
+        <div class="tags"><span class="tag">поликлиника</span><span class="tag time">до 30 рабочих дней; для паллиативных — ускоренно</span></div>
+        <p>Поликлиника назначает исследования из утверждённого перечня для онкологии. Обычно это заключение онколога, свежие общий и биохимический анализы крови, анализ мочи, данные КТ или МРТ, гистология. Многое уже есть: принесённые результаты учитывают, если они не устарели. Анализы, скорее всего, попросят пересдать.</p>
+        <p class="src">На этом шаге чаще всего затягивают. Если назначают лишнее или ставят в длинную очередь, напоминайте про IV стадию и паллиативный статус. Как жаловаться — в разделе «Если что-то пошло не так».</p>
+      </div></div>
+
+      <div class="step"><div class="num">4</div><div class="body">
+        <h3>Врачебная комиссия оформляет направление</h3>
+        <div class="tags"><span class="tag">поликлиника</span></div>
+        <p>Комиссия оформляет направление на МСЭ (форма 088/у). Протокол решения выдают на бумаге или присылают на Госуслуги. Попросите копию направления.</p>
+      </div></div>
+
+      <div class="step"><div class="num">5</div><div class="body">
+        <h3>Направление уходит в бюро МСЭ электронно</h3>
+        <div class="tags"><span class="tag">поликлиника</span><span class="tag time">3 рабочих дня; для паллиативных — 1 рабочий день</span></div>
+        <p>Документы на руки не дают и самим нести их не нужно. Направление передаётся в Главное бюро МСЭ по г. Москве через электронную систему. На Госуслуги приходят уведомления об этапах.</p>
+        <p class="src">Правила № 588, п. 18.</p>
+      </div></div>
+
+      <div class="step"><div class="num">6</div><div class="body">
+        <h3>Медико-социальная экспертиза</h3>
+        <div class="tags"><span class="tag">бюро МСЭ</span><span class="tag time">до 30 рабочих дней; для паллиативных — не более 3 рабочих дней</span></div>
+        <p>При заочной форме комиссия изучает направление и документы, без осмотра. Бюро может вызвать на очную экспертизу, если в документах расхождения. Если пациентка не может приехать, экспертизу проводят на дому или в стационаре.</p>
+        <p class="src">Правила № 588, п. 29 (заочная форма) и п. 37 (3 рабочих дня для нуждающихся в паллиативной помощи).</p>
+      </div></div>
+
+      <div class="step"><div class="num">7</div><div class="body">
+        <h3>Решение: группа, справка, ИПРА</h3>
+        <div class="tags"><span class="tag">бюро МСЭ</span></div>
+        <ul>
+          <li>С <b>01.03.2026</b> справка об инвалидности электронная. Она появляется в личном кабинете на Госуслугах сразу после решения и имеет полную юридическую силу. Бумажную можно получить по желанию.</li>
+          <li><b>ИПРА</b> (индивидуальная программа реабилитации) тоже приходит электронно. Проверьте, что в неё внесено всё нужное: средства ухода (впитывающее бельё, калоприёмники, если появится стома), кресло-коляска, противопролежневый матрас. От ИПРА зависит, что выдадут бесплатно.</li>
+          <li>Правила позволяют устанавливать группу без срока переосвидетельствования при необратимых состояниях, в том числе при ряде онкологических. Решает бюро.</li>
+        </ul>
+        <p class="src">Минтруд, 05.02.2025: «С 1 марта 2026 года справка об установлении инвалидности станет электронной». Правила № 588, п. 13 и п. 42.</p>
+      </div></div>
+
+      <div class="step"><div class="num">8</div><div class="body">
+        <h3>Пенсия назначается сама</h3>
+        <div class="tags"><span class="tag">Социальный фонд</span><span class="tag time">около 5 рабочих дней</span></div>
+        <p>Социальный фонд получает решение МСЭ из федерального реестра инвалидов и назначает пенсию по инвалидности без заявления. Пенсия назначается со дня признания инвалидом, уведомление приходит на Госуслуги. Так как у неё есть трудовой стаж, это будет <b>страховая</b> пенсия по инвалидности. Ежемесячная денежная выплата (ЕДВ) тоже оформляется по данным реестра.</p>
+        <p class="src">Если за 2–3 недели уведомления нет — позвонить в Социальный фонд или проверить раздел «Пенсии и пособия» на Госуслугах.</p>
+      </div></div>
+
+      <div class="step"><div class="num">9</div><div class="body">
+        <h3>Набор социальных услуг</h3>
+        <div class="tags"><span class="tag">пациентка или представитель</span></div>
+        <p>К ЕДВ прилагается набор социальных услуг: лекарства по рецептам, санаторная путёвка, проезд к месту лечения. По умолчанию его дают натурой. Заменить его на деньги (полностью или частично) можно заявлением в Социальный фонд <b>до 1 октября</b>, тогда замена действует со следующего года. Подумайте вместе с онкологом: если дорогие препараты будут выдавать по льготе, выгоднее оставить натурой.</p>
+      </div></div>
+
+      <div class="step"><div class="num">10</div><div class="body">
+        <h3>Московские меры поддержки</h3>
+        <div class="tags"><span class="tag">МФЦ, соцзащита, mos.ru</span></div>
+        <ul>
+          <li><b>Социальная карта москвича</b> — бесплатный проезд в метро и наземном транспорте. Оформляется в МФЦ («Мои документы») или на mos.ru.</li>
+          <li><b>Парковка для инвалидов.</b> Машину, которая её возит (можно машину родственника), вносят в федеральный реестр инвалидов через Госуслуги. Это бесплатная парковка на местах для инвалидов по всей стране. Дополнительно есть московское парковочное разрешение.</li>
+          <li><b>Социальное такси</b> для поездок в медицинские организации — через соцзащиту или mos.ru.</li>
+          <li><b>Городские ежемесячные выплаты</b> инвалидам I и II группы. Оформляются через МФЦ или mos.ru. Суммы индексируются, актуальные смотрите на mos.ru.</li>
+          <li><b>Средства реабилитации по ИПРА</b> — через Социальный фонд. Можно получить натурой или купить самим и получить компенсацию.</li>
+          <li><b>Льготные лекарства</b> — по рецептам онколога через ЕМИАС.</li>
+        </ul>
+        <p class="src">Часть московских доплат к пенсии зависит от того, работает ли человек и сколько лет прописан в Москве. Условия на конкретную дату уточняйте на mos.ru в разделе «Социальная поддержка» или в МФЦ.</p>
+      </div></div>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="h-work">
+    <h2 id="h-work">Работа и больничный</h2>
+    <div class="card">
+      <ul>
+        <li><b>Направление на МСЭ обязательно</b> не позднее 4 месяцев от начала нетрудоспособности, если прогноз неблагоприятный (приказ Минздрава № 1089н). Больничный открыт с <span class="n">11.08.2026</span>, значит направление нужно оформить <b>не позже середины декабря</b>. Лучше раньше. Врачи не вправе закрыть больничный, чтобы не направлять на МСЭ.</li>
+        <li>До решения МСЭ больничный оплачивается как обычно: при стаже от 8 лет — <b>100%</b> среднего заработка, от 5 до 8 лет — 80%, меньше 5 лет — 60%.</li>
+        <li>После установления инвалидности она может оставаться в штате и получать и зарплату (если работает), и пенсию. Работающему инвалиду больничный оплачивают не более <b>4 месяцев подряд или 5 месяцев в календарном году</b> (закон № 255-ФЗ, ст. 6).</li>
+        <li>Права работника с I или II группой по Трудовому кодексу: сокращённая неделя до 35 часов с полной оплатой (ст. 92), ежегодный отпуск не менее 30 календарных дней, отпуск без сохранения зарплаты до 60 дней в году (ст. 128).</li>
+        <li><b>Если работать она не сможет совсем</b>, лучше не увольняться по собственному желанию. Если в ИПРА записана полная неспособность к трудовой деятельности, договор прекращается по п. 5 ч. 1 ст. 83 ТК. Тогда положено выходное пособие в размере двухнедельного заработка (ст. 178 ТК) и компенсация неиспользованного отпуска.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-time">
+    <h2 id="h-time">Сроки по закону</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Этап</th><th>Обычный срок</th><th>Если признана нуждающейся в паллиативной помощи</th></tr></thead>
+      <tbody>
+        <tr><td>Обследования в поликлинике</td><td>до 30 рабочих дней</td><td>ускоренно</td></tr>
+        <tr><td>Передача направления в бюро</td><td>3 рабочих дня</td><td>1 рабочий день</td></tr>
+        <tr><td>Экспертиза в бюро</td><td>до 30 рабочих дней</td><td>не более 3 рабочих дней</td></tr>
+        <tr><td>Справка и ИПРА на Госуслугах</td><td colspan="2">сразу после решения</td></tr>
+        <tr><td>Назначение пенсии</td><td colspan="2">около 5 рабочих дней после решения, без заявления</td></tr>
+        <tr><td>Обжалование решения</td><td colspan="2">в течение 1 месяца</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="h-bad">
+    <h2 id="h-bad">Если что-то пошло не так</h2>
+    <div class="card">
+      <ul>
+        <li><b>Поликлиника затягивает обследования или отказывает в направлении.</b> Письменное заявление главному врачу. Жалоба в Департамент здравоохранения Москвы (через mos.ru) или в территориальный орган Росздравнадзора. Решение врачебной комиссии обжалуется туда же.</li>
+        <li><b>Не согласны с решением МСЭ</b> (отказ или «не та» группа). Заявление в течение месяца, через Госуслуги или в бюро, которое проводило экспертизу. Дальше — Главное бюро, Федеральное бюро МСЭ, суд.</li>
+        <li><b>Бесплатная юридическая помощь онкопациентам:</b> «Движение против рака», горячая линия <span class="n">8-800-200-47-32</span>. Также у фонда «Не напрасно» есть база статей о правах онкопациентов.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-src">
+    <h2 id="h-src">Источники</h2>
+    <ul class="sources">
+      <li><a href="https://base.garant.ru/403829132/">Постановление Правительства РФ от 05.04.2022 № 588 «О признании лица инвалидом»</a> (Гарант, актуальная редакция)</li>
+      <li><a href="https://mintrud.gov.ru/social/invalid-defence/453">Минтруд России: с 1 марта 2026 года справка об установлении инвалидности станет электронной</a></li>
+      <li><a href="https://xn--h1alcedd.xn--d1aqf.xn--p1ai/instructions/kak-oformit-invalidnost/">Госуслуги, инструкция: как оформить инвалидность в 2026 году</a> (обновлено 26.08.2026)</li>
+      <li><a href="https://sfr.gov.ru/grazhdanam/pensionnoe_obespechenie/strahovaya_pensiya_po_invalidnosti/naznachenie/">Социальный фонд России: порядок назначения страховой пенсии по инвалидности</a></li>
+      <li><a href="https://pro-palliativ.ru/library/items/kak-oformit-invalidnost/">Про Паллиатив (фонд «Вера»): как оформить инвалидность</a></li>
+      <li><a href="https://nenaprasno.ru/media/articles/pravila/bolnichnyy-vo-vremya-lecheniya-raka-10-voprosov-o-pravilakh-oformleniya/">Фонд «Не напрасно»: больничный во время лечения рака</a> (обновлено 14.04.2026)</li>
+      <li><a href="https://www.rakpobedim.ru/zashchita-pacientov/voprosy-invalidnosti/pamjatka-po-oformleniju-invalidnosti/">«Движение против рака»: памятка по оформлению инвалидности</a></li>
+      <li><a href="https://www.mos.ru/otvet-socialnaya-podderjka/kak-oformit-gruppu-invalidnosti/">mos.ru: как оформить инвалидность в Москве</a> и <a href="https://www.mos.ru/otvet-socialnaya-podderjka/kak-poluchit-pomosch-dlya-invalidov/">помощь для инвалидов</a></li>
+    </ul>
+  </section>
+
+  <p class="foot">Составлено 04.10.2026 по указанным источникам. Правила и суммы выплат меняются, а поликлиники иногда трактуют их по-своему. Если на месте говорят иное, просите сослаться на пункт документа и сверяйтесь с постановлением № 588.</p>
+</div>
+</body>
+</html>

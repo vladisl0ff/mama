@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Разбор анализов Чернец О. В.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+body { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+/* Layout: a single reading column like a doctor's written conclusion; each finding is a block with a certainty chip, so the reader sees what is established and what is open. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #15191d;
+  --ink-2: #4b535b;
+  --ink-3: #7b838b;
+  --line: #dde1e5;
+  --accent: #1f5f8b;
+  --sure-bg: #e3f3ea; --sure-ink: #11663f;
+  --likely-bg: #fdf1dc; --likely-ink: #8a5a00;
+  --open-bg: #e8edf5; --open-ink: #34507a;
+  --alarm-bg: #fbe9e7; --alarm-ink: #a2271f; --alarm-edge: #e9b5ae;
+  --f-body: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238; --accent: #6fb0e0;
+    --sure-bg: #16342a; --sure-ink: #7fdcab; --likely-bg: #3a2e14; --likely-ink: #f2c26b; --open-bg: #1d2a3e; --open-ink: #a9c4ef;
+    --alarm-bg: #3a1f1d; --alarm-ink: #ff9d92; --alarm-edge: #6b3330; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121518; --surface: #1a1e22; --ink: #eef1f4; --ink-2: #b4bcc4; --ink-3: #8a929a; --line: #2c3238; --accent: #6fb0e0;
+  --sure-bg: #16342a; --sure-ink: #7fdcab; --likely-bg: #3a2e14; --likely-ink: #f2c26b; --open-bg: #1d2a3e; --open-ink: #a9c4ef;
+  --alarm-bg: #3a1f1d; --alarm-ink: #ff9d92; --alarm-edge: #6b3330; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 780px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+header { display: grid; gap: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-size: clamp(26px, 5vw, 34px); line-height: 1.15; margin: 0; font-weight: 700; text-wrap: balance; }
+h2 { font-size: 22px; line-height: 1.25; margin: 0; font-weight: 600; text-wrap: balance; }
+h3 { font-size: 17px; margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; }
+.lead { color: var(--ink-2); }
+section { display: grid; gap: 16px; min-width: 0; }
+.n { font-family: var(--f-num); font-size: .92em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; display: grid; gap: 10px; }
+.summary ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--ink-2); }
+.chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 9px; border-radius: 999px; letter-spacing: .02em; white-space: nowrap; }
+.chip.sure { background: var(--sure-bg); color: var(--sure-ink); }
+.chip.likely { background: var(--likely-bg); color: var(--likely-ink); }
+.chip.open { background: var(--open-bg); color: var(--open-ink); }
+
+.finding { display: grid; gap: 8px; padding-block: 16px; border-top: 1px solid var(--line); }
+.finding:first-of-type { border-top: 0; padding-top: 0; }
+.fhead { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+.finding ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.why { font-size: 14px; color: var(--ink-2); }
+.why b { color: var(--ink); font-weight: 600; }
+
+.timeline { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 6px; }
+.ev { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 6px 0 10px 16px; position: relative; }
+.ev::before { content: ""; position: absolute; left: -7px; top: 13px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+.ev.key::before { background: var(--accent); }
+.ev time { font-family: var(--f-num); font-size: 13px; color: var(--ink-3); padding-top: 2px; }
+.ev p { font-size: 15px; }
+
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+th, td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 600; color: var(--ink-2); font-size: 13px; }
+td { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+td:first-child { font-family: var(--f-body); }
+tr:last-child td { border-bottom: 0; }
+
+.qs { display: grid; gap: 14px; }
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; display: grid; gap: 6px; }
+.q ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.who { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+
+.alarm { background: var(--alarm-bg); border: 1px solid var(--alarm-edge); border-radius: 12px; padding: 18px 22px; display: grid; gap: 8px; }
+.alarm h2 { color: var(--alarm-ink); }
+.alarm ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.foot { font-size: 13px; color: var(--ink-3); }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Разбор документов · по состоянию на 04.10.2026</div>
+    <h1>Что понятно из анализов Ольги Валентиновны</h1>
+    <p class="lead">Я разобрал анализы, исследования и выписки за август — октябрь 2026 года и анализы годичной давности. Здесь собрано, что из них следует, насколько это надёжно и что осталось неясным. Это помощь для разговора с врачами, а не замена их заключений.</p>
+  </header>
+
+  <section class="summary" aria-labelledby="h-short">
+    <h2 id="h-short">Коротко</h2>
+    <ol>
+      <li>Основная болезнь — рак толстой кишки (ректосигмоидный отдел) с множественными метастазами в печени. В лёгких метастазов не видно.</li>
+      <li>Желтуха механическая: крупный узел у ворот печени пережал место, где сливаются желчные протоки. Дренажи отводят желчь, но только из части печени.</li>
+      <li>После дренирования билирубин снизился с 231 до примерно 150–170 и с середины сентября дальше не падает. Для химиотерапии нужно 40.</li>
+      <li>Есть анемия с дефицитом железа, повышенные лейкоциты и СРБ, сниженная свёртываемость (МНО 1,71) и одновременно признаки повышенного риска тромбов.</li>
+      <li>По МРТ 04.10 и онкомаркеру РЭА болезнь за последний месяц прогрессирует. Поэтому время до начала лечения важно.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-time">
+    <h2 id="h-time">Как развивались события</h2>
+    <div class="timeline">
+      <div class="ev"><time>07.08.2025</time><p>Анализы год назад: гемоглобин 120, лейкоциты 8,3, тромбоциты 345, СОЭ 7. Всё в норме.</p></div>
+      <div class="ev"><time>03.08.2026</time><p>Первые изменения: лейкоциты 12,0, тромбоциты 449. Гемоглобин ещё 123, СОЭ 6.</p></div>
+      <div class="ev"><time>10–12.08</time><p>УЗИ, затем МРТ: множественные опухолевые узлы в обеих долях печени, крупнейший 9,9 см, расширение протоков, сдавление нижней полой вены.</p></div>
+      <div class="ev key"><time>17.08</time><p>Госпитализация в Энгельсскую ГКБ №1: билирубин 177, ЩФ 1843, ГГТ 1197.</p></div>
+      <div class="ev"><time>21.08</time><p>КТ грудной клетки: метастазов в лёгких нет.</p></div>
+      <div class="ev key"><time>28.08</time><p>Чрескожная холангиостомия (ЧЧХС), два дренажа. Билирубин в этот день 231, максимум.</p></div>
+      <div class="ev"><time>01.09</time><p>Билирубин 161, но гемоглобин упал до 83, альбумин до 27,6.</p></div>
+      <div class="ev"><time>15–16.09</time><p>Герцена: УЗИ печени, большой набор анализов. РЭА 171, CA 19-9 3737, АФП в норме.</p></div>
+      <div class="ev key"><time>17.09</time><p>Колоноскопия: опухоль ректосигмоидного изгиба сужает кишку до 0,6 см, взята биопсия.</p></div>
+      <div class="ev"><time>18.09</time><p>Химиотерапевт: ждать гистологию и пересмотр МРТ. Жалобы на слабость, похудание на 9 кг, подъёмы температуры.</p></div>
+      <div class="ev"><time>29.09</time><p>Логинова: билирубин 148, РЭА 362, МНО 1,71, D-димер повышен.</p></div>
+      <div class="ev key"><time>02–04.10</time><p>Дренаж перестал работать после промывания. ГКБ №15: дренажи снова работают, по МРТ протоки пережаты у ворот печени, печень увеличилась, появилась жидкость в животе. Выписана, билирубин 156.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-find">
+    <h2 id="h-find">Что понятно, по направлениям</h2>
+    <div class="legend">
+      <span><span class="chip sure">ясно</span> подтверждается несколькими исследованиями</span>
+      <span><span class="chip likely">вероятно</span> следует из цифр, но нужен врач</span>
+      <span><span class="chip open">неясно</span> данных не хватает</span>
+    </div>
+
+    <div>
+      <article class="finding">
+        <div class="fhead"><h3>Источник болезни — толстая кишка</h3><span class="chip sure">ясно</span></div>
+        <p>Сначала подозревали первичный рак печени (МРТ 12.08 описывало картину «по типу ГЦР или холангиокарциномы»). Колоноскопия 17.09 нашла опухоль кишки, и это объясняет узлы в печени как метастазы.</p>
+        <p class="why"><b>На чём основано:</b> колоноскопия; РЭА <span class="n">171→362</span> при норме до 5 — маркер, типичный для рака кишки; АФП <span class="n">2,4</span> в норме, при раке печени он обычно высокий. Окончательно подтвердит гистология.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Метастазы в печени крупные, и за месяц они выросли</h3><span class="chip sure">ясно</span></div>
+        <ul>
+          <li>Узлы в обеих долях, от 2 до 9,6 см. Самый крупный стоит у ворот печени.</li>
+          <li>Правая доля печени: <span class="n">21,1 см</span> на МРТ 12.08 и <span class="n">24,3 см</span> на МРТ 04.10.</li>
+          <li>На МРТ 04.10 впервые описана умеренная жидкость в животе.</li>
+          <li>ЛДГ <span class="n">907</span> (норма до 248) и АСТ около <span class="n">100</span> при нормальной АЛТ — так часто бывает при большой массе опухоли в печени.</li>
+        </ul>
+        <p class="why"><b>Чего нет:</b> метастазов в лёгких (КТ 21.08, рентген 03.10) и признаков разрушения костей на КТ.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Почему желтуха и почему дренажи помогают не полностью</h3><span class="chip sure">ясно</span></div>
+        <p>Желчь из печени оттекает по протокам, которые сливаются у ворот печени. Опухоль пережала именно это место, и печень оказалась разделена на отдельные участки, каждый со своим протоком. Дренажи стоят в протоках 8-го и 3-го сегментов, то есть отводят желчь из части правой и части левой доли. Остальные участки продолжают «застаиваться»: на МРТ 04.10 протоки 6-го и 7-го сегментов расширены до 4,8 мм.</p>
+        <p class="why"><b>Признак, что дренажи работают:</b> щелочная фосфатаза упала с <span class="n">1843</span> до <span class="n">359</span>, ГГТ — с <span class="n">1197</span> до <span class="n">419</span>. 250–300 мл желчи в сутки — хороший объём.<br><b>Признак, что этого недостаточно:</b> билирубин с 13.09 стоит на <span class="n">148–172</span>.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Билирубин может не снизиться до 40 одним дренированием</h3><span class="chip likely">вероятно</span></div>
+        <p>Билирубин бывает двух видов. Прямой — уже переработанный печенью; он копится, когда желчь не может уйти. Непрямой — ещё не переработанный; он копится, когда сама печень не справляется. Доля прямого у Ольги Валентиновны заметно изменилась:</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Дата и лаборатория</th><th>Общий</th><th>Прямой</th><th>Доля прямого</th></tr></thead>
+          <tbody>
+            <tr><td>17.08, Энгельс</td><td>176,7</td><td>148,8</td><td>84%</td></tr>
+            <tr><td>28.08, Энгельс</td><td>230,7</td><td>207,1</td><td>90%</td></tr>
+            <tr><td>01.09, Энгельс</td><td>161,3</td><td>143,3</td><td>89%</td></tr>
+            <tr><td>13.09, по консультации</td><td>151</td><td>81</td><td>54%</td></tr>
+            <tr><td>16.09, Герцена</td><td>168,5</td><td>94,0</td><td>56%</td></tr>
+            <tr><td>04.10 вечер, ГКБ №15</td><td>156,3</td><td>90,1</td><td>58%</td></tr>
+          </tbody>
+        </table></div>
+        <p>Прямой билирубин снизился почти вдвое (207 → 90). Значит, дренажи отводят застоявшуюся желчь. Но непрямого стало больше (около 18 → около 66). Это может означать, что значительная часть печени занята опухолью и хуже перерабатывает билирубин. Тогда даже идеальный отток желчи не опустит его до 40.</p>
+        <p class="why"><b>Оговорка:</b> перелом совпал со сменой лаборатории (Энгельс → Москва), а методы определения прямого билирубина бывают разными. Чтобы понять, реальное это изменение или разница методик, полезно сдать общий, прямой и непрямой билирубин в одной лаборатории 2–3 раза подряд.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Свёртываемость снижена</h3><span class="chip likely">вероятно</span></div>
+        <p>МНО <span class="n">1,51 → 1,71</span> (норма до 1,2), протромбин по Квику <span class="n">48%</span> (норма от 70). У этого две возможные причины:</p>
+        <ul>
+          <li>Нехватка витамина K. Он всасывается только вместе с желчью, а желчь уходит в дренажи, а не в кишку. Это лечится уколами витамина K.</li>
+          <li>Снижение работы печени, которая производит факторы свёртывания.</li>
+        </ul>
+        <p class="why"><b>Как различить:</b> если после витамина K МНО за 1–3 дня приходит в норму, причина была в витамине. Если нет — в работе печени. Это стоит обсудить, потому что это ещё и проверка того, сколько здоровой печени осталось.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Одновременно повышен риск тромбов</h3><span class="chip likely">вероятно</span></div>
+        <p>D-димер выше нормы в 2–4 раза, фибриноген <span class="n">5,1–5,7</span> (норма до 4), тромбоциты до <span class="n">708</span>. Опухоль сдавливает нижнюю полую вену (МРТ 12.08). Онкологическое заболевание само по себе повышает риск тромбоза. При этом из-за повышенного МНО профилактика разжижающими препаратами — решение только для врача.</p>
+        <p class="why"><b>На что смотреть дома:</b> отёк и боль одной ноги, внезапная одышка или боль в груди.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Анемия — от дефицита железа и хронического воспаления</h3><span class="chip sure">ясно</span></div>
+        <ul>
+          <li>Гемоглобин: <span class="n">120–123</span> до болезни → около <span class="n">110</span> в августе → <span class="n">83</span> 01.09 → около <span class="n">100</span> сейчас.</li>
+          <li>Железо <span class="n">3,9</span> (норма от 10,7), трансферрин снижен, эритроциты мелкие и бедные гемоглобином (MCH 25–27).</li>
+          <li>Ферритин <span class="n">252</span> выглядит высоким, но при воспалении он всегда завышен и о запасах железа не говорит.</li>
+          <li>Вероятный источник потерь — опухоль кишки: при колоноскопии отмечена контактная кровоточивость.</li>
+        </ul>
+        <p class="why"><b>Что можно обсудить:</b> железо внутривенно. Таблетки при воспалении и проблемах с кишкой работают плохо.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Лейкоциты и СРБ повышены — причина до конца не ясна</h3><span class="chip open">неясно</span></div>
+        <p>Лейкоциты <span class="n">13 → 15 → 18,4</span> (03.10), нейтрофилы до <span class="n">14,9</span>, СРБ около <span class="n">50</span>, СОЭ до <span class="n">109</span>. 18.09 были жалобы на подъёмы температуры. Возможные причины:</p>
+        <ul>
+          <li>Сама опухоль: крупные метастазы в печени часто дают воспалительную реакцию и температуру без инфекции.</li>
+          <li>Инфекция желчи (холангит) — типичный риск при дренажах. 04.10 врачи данных за холангит не нашли.</li>
+          <li>Моча 16.09: бактерии, положительные нитриты, эритроциты, следы белка. Это похоже на инфекцию мочи или загрязнение пробы. 29.09 моча чище.</li>
+        </ul>
+        <p class="why"><b>Что поможет:</b> посев желчи из дренажа и посев мочи, график температуры дома утром и вечером.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Питание и истощение</h3><span class="chip sure">ясно</span></div>
+        <p>Минус 9 кг за 3 месяца, вес 55 кг при росте 165. Альбумин падал до <span class="n">27,6</span>, к 16.09 был <span class="n">36,9</span>; позже его не измеряли. Без желчи в кишке хуже усваиваются жиры и жирорастворимые витамины (A, D, E, K) — поэтому важен Креон. Холестерин и триглицериды повышены — это обычное следствие застоя желчи, а не отдельная проблема.</p>
+        <p class="why"><b>Что можно обсудить:</b> лечебное питание (смеси с высоким содержанием белка), контроль альбумина.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Кишка сужена — есть риск непроходимости</h3><span class="chip sure">ясно</span></div>
+        <p>Опухоль сужает просвет до <span class="n">0,6 см</span>, эндоскоп диаметром 1,2 см пройти не смог. На УЗИ 03.09 описан копростаз. На рентгене 03.10 признаков непроходимости нет. Это стоит обсудить с хирургом заранее: что делать, если стул прекратится (стент в кишку или стома), и нужен ли этот шаг до химиотерапии.</p>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Что работает нормально</h3><span class="chip sure">ясно</span></div>
+        <ul>
+          <li>Почки: креатинин и мочевина в норме. Чуть сниженный креатинин бывает при похудании.</li>
+          <li>Поджелудочная железа: амилаза в норме, панкреатита нет.</li>
+          <li>Сахар в основном в норме; одно значение 7,56 было вечером в стационаре.</li>
+          <li>Электролиты (калий, натрий, кальций, магний) в норме, хлор чуть ниже.</li>
+          <li>ВИЧ, гепатиты B и C, сифилис — отрицательно во всех лабораториях.</li>
+          <li>Давление, пульс и дыхание при выписке 04.10 в норме.</li>
+        </ul>
+      </article>
+
+      <article class="finding">
+        <div class="fhead"><h3>Находки, которые не главные сейчас</h3><span class="chip open">неясно</span></div>
+        <ul>
+          <li>В желудке подслизистое образование 4 см (ФГДС 18.08). Это может быть отдельная доброкачественная опухоль или сдавление снаружи. Онколог должен о нём знать, но решать его будут позже.</li>
+          <li>Миома матки (УЗИ 03.09) на текущую ситуацию не влияет.</li>
+          <li>В документах по-разному записаны стадия (cT3N0M1 в Герцена, T3N1M1 в ГКБ №15) и отдел кишки («ректосигмоидный» или «сигмовидная»). На лечение это вряд ли влияет, но в итоговом диагнозе лучше ориентироваться на онколога, который ведёт.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-gap">
+    <h2 id="h-gap">Чего не хватает, чтобы понять больше</h2>
+    <ul>
+      <li>Гистология биопсии от 17.09 — вы её запросили.</li>
+      <li>Молекулярные тесты опухоли: <b>RAS (KRAS, NRAS), BRAF, MSI</b>. От них зависит выбор химиотерапии и таргетных препаратов. Их делают на том же материале биопсии.</li>
+      <li>Альбумин, МНО и билирубин по фракциям после 04.10, желательно в одной лаборатории.</li>
+      <li>Посев желчи и мочи.</li>
+      <li>Итог пересмотра МРТ в НМИЦ радиологии, который рекомендовал химиотерапевт 18.09.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-q">
+    <h2 id="h-q">Вопросы врачам</h2>
+    <div class="qs">
+      <div class="q">
+        <div class="who">Хирург, рентгенэндоваскулярный хирург</div>
+        <ul>
+          <li>Можно ли дренировать дополнительные участки печени (например, 6–7 сегменты) или поставить стент, чтобы билирубин дошёл до 40?</li>
+          <li>Какая часть печени сейчас дренирована и какая — нет?</li>
+          <li>Что делать с сужением кишки до 0,6 см: нужен ли стент или стома до химиотерапии?</li>
+        </ul>
+      </div>
+      <div class="q">
+        <div class="who">Онколог-химиотерапевт</div>
+        <ul>
+          <li>Сделаны ли RAS, BRAF и MSI? Если нет, когда и где их сделать?</li>
+          <li>Если билирубин упрётся в 100–150, есть ли варианты лечения при таком билирубине или с уменьшенными дозами?</li>
+          <li>Ускоряет ли решение рост РЭА и увеличение печени?</li>
+        </ul>
+      </div>
+      <div class="q">
+        <div class="who">Терапевт или онколог по месту жительства</div>
+        <ul>
+          <li>Нужен ли витамин K при МНО 1,71?</li>
+          <li>Нужно ли железо внутривенно?</li>
+          <li>Нужна ли профилактика тромбозов, учитывая повышенный D-димер и сдавление нижней полой вены?</li>
+          <li>Подходит ли Урсосан, пока протоки у ворот печени пережаты?</li>
+          <li>Можно ли сдать посев желчи и мочи и как часто контролировать анализы?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="alarm" aria-labelledby="h-alarm">
+    <h2 id="h-alarm">Когда вызывать скорую, не дожидаясь приёма</h2>
+    <ul>
+      <li>Температура выше 38 с ознобом — возможен холангит.</li>
+      <li>Дренажи перестали работать, по ним идёт кровь, или резко усилилась желтуха.</li>
+      <li>Нет стула и газов, вздутие, рвота — возможна непроходимость кишки.</li>
+      <li>Чёрный стул, рвота кровью или «кофейной гущей».</li>
+      <li>Быстро растёт живот, появилась одышка.</li>
+      <li>Отёк и боль одной ноги, внезапная одышка или боль в груди.</li>
+      <li>Спутанность сознания, сильная сонливость.</li>
+    </ul>
+  </section>
+
+  <p class="foot">Документы: ЦЛД (Саратов), Энгельсская ГКБ №1, «Реал П.К.», «Арктика-Н», МНИОИ им. П. А. Герцена и НМИЦ радиологии, МКНЦ им. А. С. Логинова, ГКБ №15 им. О. М. Филатова. Подробные цифры по датам — в файле «Динамика анализов». Разбор подготовлен по документам и не заменяет осмотра и решения лечащих врачей.</p>
+</div>
+</body>
+</html>
